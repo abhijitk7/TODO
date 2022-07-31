@@ -1,0 +1,37 @@
+<div class="container">
+    <h1>List of Todos</h1>
+</div>
+<div class="container">
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Target date of completion
+            </th>
+            <th>
+                Is completed?
+            </th>
+            <th>
+                Remove
+            </th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let todo of todos">
+        <tr>
+            <td>{{todo.id}}</td>
+            <td>{{todo.description}}</td>
+            <td>{{todo.targetDate | date | uppercase}}</td>
+            <td>{{todo.isCompleted}}</td>
+            <td><button class="btn btn-warning" (click)="deleteTodo(todo.id)">Delete</button></td>
+        </tr>
+    </tbody>
+</table>
+</div>
