@@ -12,15 +12,16 @@
             </div>
 
             <div class="mb-3">
-              <input type="text" class="form-control" id="Username" aria-describedby="emailHelp"
-                placeholder="User Name" [(ngModel)]="name">
+              <input type="text" class="form-control" name="userName" aria-describedby="emailHelp"
+                placeholder="User Name" [(ngModel)]="userName">
             </div>
             <div class="mb-3">
-              <input type="password" class="form-control" id="password" placeholder="Password" [(ngModel)]="password">
+              <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="password">
             </div>
             <div class="text-center"><button (click)="handleLogin()" type="submit" class="btn btn-color px-5 mb-5 w-100">Login</button></div>
           </form>
         </div>
+        <div class="row" *ngIf="isInValidLogin">Login Failed</div>
 
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { response } from 'express';
 import { Todo } from '../models/todo.model';
-import { HardecodedAuthenticationService } from '../service/hardecoded-authentication.service';
+import { TodoService } from '../service/data/todo.service';
 
 @Component({
   selector: 'app-list-of-todo',
@@ -9,17 +10,24 @@ import { HardecodedAuthenticationService } from '../service/hardecoded-authentic
 })
 export class ListOfTodoComponent implements OnInit {
 
-   todos=[
+  todos:Todo[]=[];
+   /*todos=[
     new Todo(1,"Become expert at Angular",new Date(),false),
     new Todo(2,"Become expert at Kafka",new Date(),false),
     new Todo(3,"Become expert at JavaScript",new Date(),false)
-  ];
+  ];*/
 
-  constructor() { }
+  
+  constructor(private todoService:TodoService) { }
 
   ngOnInit(): void {
-    
+    this.todoService.retriveAllTodos().subscribe(
+      response=>{
+        this.todos=response;
+      }
+    )
   }
+
 
   deleteTodo(id:Number){
     console.log("Id to be deleted is "+id)

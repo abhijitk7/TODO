@@ -9,8 +9,8 @@ import { HardecodedAuthenticationService } from '../service/hardecoded-authentic
 })
 export class LoginComponent implements OnInit {
 
-  name="Abhijit";
-  password="Z2d!ed$1GHW6";
+  userName="";
+  password="";
   errorMessage="Invalid credentials";
   isInValidLogin=false;
 
@@ -20,13 +20,25 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin(){
-    if(this.hardecodedAuthenticationService.validateAuthentication(this.name,this.password)){
+
+    this.hardecodedAuthenticationService.executeBasicAuthentication(this.userName,this.password).subscribe(
+      data=>{
+        this.isInValidLogin=false;
+        this.router.navigate(['welcome',this.userName]);
+      },
+      error=>{
+        console.log(error)
+        this.isInValidLogin=true;
+        this.removeMessage();
+      }
+    )
+  }
+
+  // I want to remove message after 5 seconds
+  removeMessage(){
+    setTimeout(()=>{
       this.isInValidLogin=false;
-      this.router.navigate(['welcome',this.name]);
-    }else{
-      this.isInValidLogin=true;
-    }
-    
+    },5000)  
   }
 
 }
