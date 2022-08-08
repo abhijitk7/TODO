@@ -33,6 +33,7 @@ export class HardecodedAuthenticationService {
         data=>{
           sessionStorage.setItem(AUTHENTICATED_USER,userName);
           sessionStorage.setItem(TOKEN,basicAuthenticationString);
+          this.isLoggedIn=true;
           return data;
         }
       )
@@ -40,13 +41,19 @@ export class HardecodedAuthenticationService {
   }
 
   isUserLoggedIn():Boolean{
-    if(window.sessionStorage.getItem('authenticaterUser')===null){
-      this.isLoggedIn=false;
-    }else{
-      this.isLoggedIn=true;
-    }
-   
-    return this.isLoggedIn;
+    let user = sessionStorage.getItem(AUTHENTICATED_USER)
+    return !(user === null)
+  }
+
+  getAuthenticatedUser() {
+    return sessionStorage.getItem(AUTHENTICATED_USER)
+  }
+
+  getAuthToken(){
+    let token='';
+    if(this.getAuthenticatedUser())
+      token=sessionStorage.getItem(TOKEN) as string
+    return token;
   }
 
   logOut(){

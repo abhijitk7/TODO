@@ -11,6 +11,7 @@ import { TodoService } from '../service/data/todo.service';
 export class ListOfTodoComponent implements OnInit {
 
   todos:Todo[]=[];
+  isLoading:Boolean=true;
    /*todos=[
     new Todo(1,"Become expert at Angular",new Date(),false),
     new Todo(2,"Become expert at Kafka",new Date(),false),
@@ -24,22 +25,24 @@ export class ListOfTodoComponent implements OnInit {
     this.todoService.retriveAllTodos().subscribe(
       response=>{
         this.todos=response;
+        this.isLoading=false;
       }
     )
   }
 
 
-  deleteTodo(id:Number){
+  deleteTodo(id:number){
     console.log("Id to be deleted is "+id)
+    this.isLoading=true;
 
-    const indexOfObject=this.todos.findIndex(function(object){
-      return object.id===id;
-    })
-    
-    if(indexOfObject!==-1){
-      this.todos.splice(indexOfObject,1);
-    }
-    console.dir(this.todos);
+    this.todoService.deleteTodo(id).subscribe(
+      response=>{
+        this.todos=response;
+        this.isLoading=false;
+      },
+      error=>{
+        console.dir(error);
+      })
   }
 
   

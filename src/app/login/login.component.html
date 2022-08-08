@@ -4,24 +4,25 @@
         <h2 class="text-center text-dark mt-5">Login</h2>
         <div class="card my-5">
 
-          <form class="card-body cardbody-color p-lg-5">
+          <form class="card-body cardbody-color p-lg-5" [formGroup]="loginForm" (ngSubmit)="handleLogin()">
 
             <div class="text-center">
               <img src="https://i.ibb.co/yVGxFPR/2.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
                 width="200px" alt="profile">
             </div>
-
+ 
             <div class="mb-3">
-              <input type="text" class="form-control" name="userName" aria-describedby="emailHelp"
-                placeholder="User Name" [(ngModel)]="userName">
+              <app-input [control]="loginForm.controls.userName" placeholder="User name"></app-input>
             </div>
+            
             <div class="mb-3">
-              <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="password">
+              <app-input [control]="loginForm.controls.password" placeholder="Password" type="password"></app-input>
             </div>
-            <div class="text-center"><button (click)="handleLogin()" type="submit" class="btn btn-color px-5 mb-5 w-100">Login</button></div>
+            <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100"
+              [disabled]="!loginForm.valid">Login</button></div>
           </form>
         </div>
-        <div class="row" *ngIf="isInValidLogin">Login Failed</div>
+        <div class="row" class="text-danger" *ngIf="isInValidLogin">Login Failed</div>
 
       </div>
     </div>

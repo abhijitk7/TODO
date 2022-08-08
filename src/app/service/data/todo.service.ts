@@ -14,4 +14,8 @@ export class TodoService {
     
     return this.http.get<Todo[]>(`${API_URL}/api/todo`);
   }
+
+  deleteTodo(id:number){
+    return this.http.delete<Todo[]>(`${API_URL}/api/todo/${id}`)
+  }
 }

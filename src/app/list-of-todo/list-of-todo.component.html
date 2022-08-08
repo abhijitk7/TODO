@@ -1,9 +1,14 @@
-<div *ngIf="todos.length<1" class="container">
-    There are no todo's to display!
+<div *ngIf="!isLoading && todos.length<1" class="d-flex align-items-center justify-content-center" style="height: 450px">
+    Your TODO list is empty!
 </div>
 
+<div *ngIf="isLoading" class="d-flex align-items-center justify-content-center" style="height: 450px">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div> 
 
-<div *ngIf="todos.length>0" class="container">
+<div *ngIf="!isLoading && todos.length>0" class="container">
     <div class="container">
         <h1>List of Todos</h1>
     </div>
