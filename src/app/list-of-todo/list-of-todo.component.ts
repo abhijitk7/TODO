@@ -12,6 +12,7 @@ export class ListOfTodoComponent implements OnInit {
 
   todos:Todo[]=[];
   isLoading:Boolean=true;
+  isAPIError:Boolean=false;
    /*todos=[
     new Todo(1,"Become expert at Angular",new Date(),false),
     new Todo(2,"Become expert at Kafka",new Date(),false),
@@ -33,14 +34,19 @@ export class ListOfTodoComponent implements OnInit {
 
   deleteTodo(id:number){
     console.log("Id to be deleted is "+id)
-    this.isLoading=true;
 
     this.todoService.deleteTodo(id).subscribe(
       response=>{
-        this.todos=response;
-        this.isLoading=false;
+        const indexOfObject=this.todos.findIndex(function(object){
+          return object.id===id;
+        })
+        
+        if(indexOfObject!==-1){
+          this.todos.splice(indexOfObject,1);
+        }
       },
       error=>{
+        this.isAPIError=true;
         console.dir(error);
       })
   }

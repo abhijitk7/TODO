@@ -1,49 +1,87 @@
-<div *ngIf="!isLoading && todos.length<1" class="d-flex align-items-center justify-content-center" style="height: 450px">
-    Your TODO list is empty!
+
+<div class="container">
+   
+    
+    <div *ngIf="isAPIError"   class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Something went wrong!</strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div *ngIf="!isLoading && todos.length<1" class="d-flex align-items-center justify-content-center" style="height: 450px">
+        Your TODO list is empty!
+    </div>
+
+    <div *ngIf="isLoading" class="d-flex align-items-center justify-content-center" style="height: 450px">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div> 
+
+    <div class="row row-cols-3">
+            <div class="col"></div>
+            <div class="col">
+                <app-input placeholder="Search by description..."></app-input>
+            </div>
+            <div class="col">
+            </div>
+      </div>
+
+    <div *ngIf="!isLoading && todos.length>0">
+            <h1>List of Todos</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Target date of completion
+                    </th>
+                    <th>
+                        Is completed?
+                    </th>
+                    <th>
+                        Remove
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let todo of todos">
+                <tr>
+                    <td>{{todo.description}}</td>
+                    <td>{{todo.dateOfCompletion | date | uppercase}}</td>
+                    <td>{{todo.isCompleted}}</td>
+                    <td><button class="btn btn-warning" (click)="deleteTodo(todo.id)">Delete <i class="bi bi-trash"></i></button></td>
+                    <td><button class="btn btn btn-primary" (click)="deleteTodo(todo.id)">Edit <i class="bi bi-pencil-square"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Add <i class="bi bi-plus-circle-fill"></i>
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div *ngIf="isLoading" class="d-flex align-items-center justify-content-center" style="height: 450px">
-    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-</div> 
-
-<div *ngIf="!isLoading && todos.length>0" class="container">
-    <div class="container">
-        <h1>List of Todos</h1>
-    </div>
-    <div class="container">
-
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Id
-                </th>
-                <th>
-                    Description
-                </th>
-                <th>
-                    Target date of completion
-                </th>
-                <th>
-                    Is completed?
-                </th>
-                <th>
-                    Remove
-                </th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let todo of todos">
-            <tr>
-                <td>{{todo.id}}</td>
-                <td>{{todo.description}}</td>
-                <td>{{todo.dateOfCompletion | date | uppercase}}</td>
-                <td>{{todo.isCompleted}}</td>
-                <td><button class="btn btn-warning" (click)="deleteTodo(todo.id)">Delete</button></td>
-            </tr>
-        </tbody>
-    </table>
-    </div>
-</div>
