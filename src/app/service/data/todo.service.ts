@@ -11,11 +11,14 @@ export class TodoService {
   constructor(private http:HttpClient) { }
 
   retriveAllTodos(){
-    
     return this.http.get<Todo[]>(`${API_URL}/api/todo`);
   }
 
   deleteTodo(id:number){
     return this.http.delete<Todo[]>(`${API_URL}/api/todo/${id}`)
+  }
+
+  saveOrUpdateToDo(todo:Todo){
+    return this.http.post<Todo>(`${API_URL}/api/todo`,todo);
   }
 }

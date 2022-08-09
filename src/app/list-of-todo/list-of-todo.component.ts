@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { response } from 'express';
 import { Todo } from '../models/todo.model';
 import { TodoService } from '../service/data/todo.service';
@@ -13,16 +14,23 @@ export class ListOfTodoComponent implements OnInit {
   todos:Todo[]=[];
   isLoading:Boolean=true;
   isAPIError:Boolean=false;
-   /*todos=[
-    new Todo(1,"Become expert at Angular",new Date(),false),
-    new Todo(2,"Become expert at Kafka",new Date(),false),
-    new Todo(3,"Become expert at JavaScript",new Date(),false)
-  ];*/
+  isEdit:Boolean=false;  
+  todo:Todo=new Todo();
 
+  formValue!:FormGroup;
   
-  constructor(private todoService:TodoService) { }
+  constructor(private todoService:TodoService,private formBuilder:FormBuilder) { }
 
   ngOnInit(): void {
+    this.getAllTodo();
+    this.formValue=this.formBuilder.group({
+        description:['',Validators.required],
+        dateOfCompletion:[''],
+        isCompleted:['']
+    })
+  }
+
+  getAllTodo(){
     this.todoService.retriveAllTodos().subscribe(
       response=>{
         this.todos=response;
@@ -30,6 +38,22 @@ export class ListOfTodoComponent implements OnInit {
       }
     )
   }
+
+  saveTodo(){
+    this.todo.description=this.formValue.value.description;
+    this.todo.isCompleted=this.formValue.value.isCompleted;
+    this.todo.userName=window.sessionStorage.getItem('authenticaterUser') as string;
+
+    this.todoService.saveOrUpdateToDo(this.todo).subscribe(response=>{
+      console.dir(response);
+      this.formValue.reset();
+      let closeButton=document.getElementById('close');
+      closeButton?.click();
+      this.getAllTodo();
+    },error=>{
+      console.dir(error);
+    })
+  } 
 
 
   deleteTodo(id:number){
