@@ -20,7 +20,7 @@
     <div class="row row-cols-3">
             <div class="col"></div>
             <div class="col">
-                <app-input placeholder="Search by description..."></app-input>
+              <input type="text" class="form-control" placeholder="Search by description" name="searchText" [(ngModel)]="searchText"  (keyup)="searchTodo($any($event.target).value)"/>
             </div>
             <div class="col">
             </div>
@@ -49,8 +49,8 @@
                     </th>
                 </tr>
             </thead>
-            <tbody *ngFor="let todo of todos">
-                <tr>
+            <tbody>
+                <tr *ngFor="let todo of todos | searchFilter:searchText; index as i">
                     <td>{{todo.description}}</td>
                     <td>{{todo.dateOfCompletion | date | uppercase}}</td>
                     <td>{{todo.isCompleted}}</td>

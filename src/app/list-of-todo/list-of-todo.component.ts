@@ -16,6 +16,8 @@ export class ListOfTodoComponent implements OnInit {
   isAPIError:Boolean=false;
   isEdit:Boolean=false;  
   todo:Todo=new Todo();
+  searchText!:string;
+  searchTodoList:any;
 
   formValue!:FormGroup;
   
@@ -75,5 +77,12 @@ export class ListOfTodoComponent implements OnInit {
       })
   }
 
+  searchTodo(enteredText:string):void{
+        this.todos=this.searchTodoList.filter((val:any)=>
+        val.description.toLowerCase().includes(enteredText)
+      );
+    
+    
+  }
   
 }
