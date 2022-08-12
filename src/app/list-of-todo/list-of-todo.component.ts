@@ -17,7 +17,7 @@ export class ListOfTodoComponent implements OnInit {
   isEdit:Boolean=false;  
   todo:Todo=new Todo();
   searchText!:string;
-  searchTodoList:any;
+  searchTodoList!:any;
 
   formValue!:FormGroup;
   
@@ -48,14 +48,40 @@ export class ListOfTodoComponent implements OnInit {
 
     this.todoService.saveOrUpdateToDo(this.todo).subscribe(response=>{
       console.dir(response);
-      this.formValue.reset();
-      let closeButton=document.getElementById('close');
-      closeButton?.click();
-      this.getAllTodo();
+      this.clearAndCloseForm();
     },error=>{
       console.dir(error);
     })
   } 
+
+  editTodo(todo:Todo){
+    this.todo.id=todo.id;
+    this.formValue.controls["description"].patchValue(todo.description);
+    this.formValue.controls["isCompleted"].patchValue(todo.isCompleted);
+    this.isEdit=true;
+  }
+
+  updateTodo(){
+    this.todo.description=this.formValue.value.description;
+    this.todo.isCompleted=this.formValue.value.isCompleted;
+    this.todo.userName=window.sessionStorage.getItem('authenticaterUser') as string;
+
+    this.todoService.saveOrUpdateToDo(this.todo).subscribe(
+      response=>{
+        this.clearAndCloseForm();
+      },error=>{
+        console.dir(error);
+      }
+    )
+  }
+
+  clearAndCloseForm(){
+      this.formValue.reset();
+      let closeButton=document.getElementById('close');
+      closeButton?.click();
+      this.getAllTodo();
+      this.isEdit=false;
+  }
 
 
   deleteTodo(id:number){

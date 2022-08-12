@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { HttpIntercepterBasicAuthServiceService } from './service/http/http-intercepter-basic-auth-service.service';
 import { SearchFilterPipe } from './pipe/search-filter.pipe';
+import { YesNoPipe } from './pipe/yes-no.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SearchFilterPipe } from './pipe/search-filter.pipe';
     FooterComponent,
     LogoutComponent,
     TodoComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    YesNoPipe
   ],
   imports: [
     BrowserModule,

@@ -53,10 +53,12 @@
                 <tr *ngFor="let todo of todos | searchFilter:searchText; index as i">
                     <td>{{todo.description}}</td>
                     <td>{{todo.dateOfCompletion | date | uppercase}}</td>
-                    <td>{{todo.isCompleted}}</td>
+                    <td>
+                      {{todo.isCompleted | yesNo}}
+                    </td>
                     <td><button class="btn btn-warning" (click)="deleteTodo(todo.id)">Delete <i class="bi bi-trash"></i></button></td>
                     <td>
-                        <button class="btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button class="btn btn btn-primary" (click)="editTodo(todo)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Edit <i class="bi bi-pencil-square"></i>
                         </button>
                     </td>
@@ -82,7 +84,7 @@
                 <div class="mb-3">
                   <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
                   <div class="col-sm-12">
-                    <input type="email" formControlName="description" class="form-control" id="inputEmail3">
+                    <input type="text" formControlName="description" class="form-control" id="description">
                   </div>
                 </div>
                 <div class="mb-3">
@@ -91,7 +93,7 @@
                     <input type="text" formControlName="dateOfCompletion" class="form-control" id="inputPassword3">
                   </div>
                 </div>
-                <div class="form-check">
+               <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" formControlName="isCompleted">
                     <label class="form-check-label" for="flexCheckDefault">
                         Is Completed?
@@ -101,8 +103,8 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="close" data-bs-dismiss="modal">Close</button>
-          <button type="button" (click)="saveTodo()" class="btn btn-success">Save <i class="bi bi-send-fill"></i></button>
-          <button type="button" class="btn btn-warning">Update <i class="bi bi-send-fill"></i></button>
+          <button type="button" *ngIf="!isEdit" (click)="saveTodo()" class="btn btn-success">Save <i class="bi bi-send-fill"></i></button>
+          <button type="button" *ngIf="isEdit" (click)="updateTodo()" class="btn btn-warning">Update <i class="bi bi-send-fill"></i></button>
         </div>
       </div>
     </div>
