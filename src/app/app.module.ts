@@ -17,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpIntercepterBasicAuthServiceService } from './service/http/http-intercepter-basic-auth-service.service';
 import { SearchFilterPipe } from './pipe/search-filter.pipe';
 import { YesNoPipe } from './pipe/yes-no.pipe';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { YesNoPipe } from './pipe/yes-no.pipe';
     SharedModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: HttpIntercepterBasicAuthServiceService, multi: true }
+    {provide: HTTP_INTERCEPTORS, useClass: HttpIntercepterBasicAuthServiceService, multi: true },DatePipe
   ],
   bootstrap: [AppComponent]
 })

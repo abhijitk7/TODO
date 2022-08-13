@@ -82,7 +82,7 @@
         <div class="modal-body">
             <form [formGroup]="formValue">
                 <div class="mb-3">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">Description</label>
+                  <label for="description" class="col-sm-2 col-form-label">Description</label>
                   <div class="col-sm-12">
                     <input type="text" formControlName="description" class="form-control" id="description">
                   </div>
@@ -90,7 +90,7 @@
                 <div class="mb-3">
                   <label for="inputPassword3" class="col-sm-4 col-form-label">Date of Completion</label>
                   <div class="col-sm-12">
-                    <input type="text" formControlName="dateOfCompletion" class="form-control" id="inputPassword3">
+                    <input type="date" [min]="todayDate" formControlName="dateOfCompletion" class="form-control" id="inputPassword3">
                   </div>
                 </div>
                <div class="form-check">

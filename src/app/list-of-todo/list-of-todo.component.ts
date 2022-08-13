@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { response } from 'express';
@@ -18,12 +19,13 @@ export class ListOfTodoComponent implements OnInit {
   todo:Todo=new Todo();
   searchText!:string;
   searchTodoList!:any;
-
+  todayDate:any;
   formValue!:FormGroup;
   
-  constructor(private todoService:TodoService,private formBuilder:FormBuilder) { }
+  constructor(private todoService:TodoService,private formBuilder:FormBuilder,private datePipe:DatePipe) { }
 
   ngOnInit(): void {
+    this.todayDate=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.getAllTodo();
     this.formValue=this.formBuilder.group({
         description:['',Validators.required],
@@ -44,6 +46,7 @@ export class ListOfTodoComponent implements OnInit {
   saveTodo(){
     this.todo.description=this.formValue.value.description;
     this.todo.isCompleted=this.formValue.value.isCompleted;
+    this.todo.dateOfCompletion=this.formValue.value.dateOfCompletion;
     this.todo.userName=window.sessionStorage.getItem('authenticaterUser') as string;
 
     this.todoService.saveOrUpdateToDo(this.todo).subscribe(response=>{
@@ -58,12 +61,14 @@ export class ListOfTodoComponent implements OnInit {
     this.todo.id=todo.id;
     this.formValue.controls["description"].patchValue(todo.description);
     this.formValue.controls["isCompleted"].patchValue(todo.isCompleted);
+    this.formValue.controls["dateOfCompletion"].patchValue(todo.dateOfCompletion);
     this.isEdit=true;
   }
 
   updateTodo(){
     this.todo.description=this.formValue.value.description;
     this.todo.isCompleted=this.formValue.value.isCompleted;
+    this.todo.dateOfCompletion=this.formValue.value.dateOfCompletion;
     this.todo.userName=window.sessionStorage.getItem('authenticaterUser') as string;
 
     this.todoService.saveOrUpdateToDo(this.todo).subscribe(
