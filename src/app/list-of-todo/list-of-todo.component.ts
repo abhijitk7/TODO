@@ -44,12 +44,14 @@ export class ListOfTodoComponent implements OnInit {
   }
 
   saveTodo(){
-    this.todo.description=this.formValue.value.description;
-    this.todo.isCompleted=this.formValue.value.isCompleted;
-    this.todo.dateOfCompletion=this.formValue.value.dateOfCompletion;
-    this.todo.userName=window.sessionStorage.getItem('authenticaterUser') as string;
+    //let is block scoped variable , need to create new Todo object everytime inserting new Todo
+    let todo=new Todo();
+    todo.description=this.formValue.value.description;
+    todo.isCompleted=this.formValue.value.isCompleted;
+    todo.dateOfCompletion=this.formValue.value.dateOfCompletion;
+    todo.userName=window.sessionStorage.getItem('authenticaterUser') as string;
 
-    this.todoService.saveOrUpdateToDo(this.todo).subscribe(response=>{
+    this.todoService.saveOrUpdateToDo(todo).subscribe(response=>{
       console.dir(response);
       this.clearAndCloseForm();
     },error=>{
@@ -90,9 +92,6 @@ export class ListOfTodoComponent implements OnInit {
       }
   }
 
-  createNewTodo(){
-    this.todo=new Todo();
-  }
 
 
   deleteTodo(id:number){

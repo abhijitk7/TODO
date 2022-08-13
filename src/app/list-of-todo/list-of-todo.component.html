@@ -67,7 +67,7 @@
         </table>
     </div>
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="createNewTodo()">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
     Add <i class="bi bi-plus-circle-fill"></i>
   </button>
   
@@ -76,7 +76,8 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Add Todo Item</h5>
+          <h5 class="modal-title" *ngIf="!isEdit" id="staticBackdropLabel">Add Todo Item</h5>
+          <h5 class="modal-title" *ngIf="isEdit" id="staticBackdropLabel">Edit Todo Item</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closePopUp()"></button>
         </div>
         <div class="modal-body">
