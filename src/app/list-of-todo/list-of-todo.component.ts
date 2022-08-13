@@ -80,12 +80,18 @@ export class ListOfTodoComponent implements OnInit {
     )
   }
 
-  clearAndCloseForm(){
+  clearAndCloseForm(needApiCall:boolean=true){
       this.formValue.reset();
       let closeButton=document.getElementById('close');
       closeButton?.click();
-      this.getAllTodo();
       this.isEdit=false;
+      if(needApiCall){
+        this.getAllTodo();  
+      }
+  }
+
+  createNewTodo(){
+    this.todo=new Todo();
   }
 
 
@@ -112,8 +118,10 @@ export class ListOfTodoComponent implements OnInit {
         this.todos=this.searchTodoList.filter((val:any)=>
         val.description.toLowerCase().includes(enteredText)
       );
-    
-    
+  }
+
+  closePopUp(){
+    this.clearAndCloseForm(false);
   }
   
 }

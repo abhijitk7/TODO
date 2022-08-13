@@ -67,7 +67,7 @@
         </table>
     </div>
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="createNewTodo()">
     Add <i class="bi bi-plus-circle-fill"></i>
   </button>
   
@@ -77,7 +77,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Add Todo Item</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closePopUp()"></button>
         </div>
         <div class="modal-body">
             <form [formGroup]="formValue">
@@ -102,7 +102,7 @@
               </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" id="close" data-bs-dismiss="modal">Close</button>
+          <button type="button" (click)="closePopUp()" class="btn btn-secondary" id="close" data-bs-dismiss="modal">Close</button>
           <button type="button" *ngIf="!isEdit" (click)="saveTodo()" class="btn btn-success">Save <i class="bi bi-send-fill"></i></button>
           <button type="button" *ngIf="isEdit" (click)="updateTodo()" class="btn btn-warning">Update <i class="bi bi-send-fill"></i></button>
         </div>
